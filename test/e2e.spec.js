@@ -36,8 +36,7 @@ describe('test create node', ()=>{
    })
    it.only('add new node', (done)=>{
      request
-     .post('localhost:3000/api/v1/node/test')
-     .send({'ip': '123.123.123.123'})
+     .post('localhost:3000/api/v1/node/test?dnsname=oleg&&ip=123.123.123.123')
      .set('Accept', 'application/json')
      .end(function(err, res){
      if (err)

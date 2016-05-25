@@ -10,21 +10,22 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.post('/api/v1/node/:account', function(req, res, next) {
+router.post('/api/v1/node/:account?', function(req, res, next) {
 //  console.log(`${req.params.account}`)
   //ansible acountName ip DNSname (optional)
   var config = require('../config');
   //process.env.run_command = 'echo';
   assert(config);
   debug('executing command : '  + config.command);
-  var ip = req.body.ip;
+  var ip  = req.query.ip;
+  var dns = req.query.dnsname;
   /*var version = exec(config.command, {silent:true}).stdout;
   var child = exec('some_long_running_process', {async:true});
   child.stdout.on('data', function(data) {
     console.log('data:' + data);
   });*/
 
-  var runCommand = util.format('%s %s %s','echo', req.params.account , ip)
+  var runCommand = util.format('%s %s %s %s', config.command, req.params.account , ip, dns)
 
   exec(runCommand, function(code, stdout, stderr) {
    console.log('Exit code:', code);
