@@ -35,7 +35,7 @@ router.post('/api/v1/node/:account?', function(req, res, next) {
    console.log('Program stderr:', stderr);
 
    if (code == 0) { 
-     res.send('OK\n');
+     res.send('OK');
    }
    else {
      res.send('\n' + stdout + '\n' + stderr + '\nFAILED');

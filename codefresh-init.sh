@@ -23,9 +23,11 @@ do
   fi
 done
 
-IP=$(curl ipecho.net/plain 2>/dev/null)
-read -p "Enter public IP of the node - default ${IP}: " IP
-
+DEFAULT_IP=$(curl ipecho.net/plain 2>/dev/null)
+read -p "Enter public IP of the node - default ${DEFAULT_IP}: " IP
+if [[ -z "$IP" ]]; then
+  IP=${DEFAULT_IP}
+fi
 
 read -p "Enter DNS name of the node (optional): " DNSNAME
 if [[ -z "$DNSNAME" ]]; then
@@ -52,4 +54,4 @@ $SUDO su codefresh -c "echo $ID_RSA_PUB > /home/codefresh/.ssh/authorized_keys &
 echo -e "\nSending request to bootstrap. Please wait, this might take several minutes ... \n"
 
 curl -X POST http://addnode.cf-cd.com:3000/api/v1/node/"${ACCOUNT_ID}"?ip="${IP}"\&dnsname="${DNSNAME}"
-#curl -X POST http://localhost:3000/api/v1/node/"${ACCOUNT_ID}"?ip="${IP}"\&dnsname="${DNSNAME}"
+echo -e "\n"
